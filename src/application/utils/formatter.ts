@@ -5,6 +5,7 @@ import {
   DEFAULT_PREFIXES,
   LOG_LEVEL_HIERARCHY,
   DEFAULT_TIMESTAMP_COLOR,
+  SEMIBOLD,
 } from "../constants/config";
 
 /**
@@ -59,7 +60,8 @@ export function formatLogEntry(entry: LogEntry, config: LogConfig): string {
   }
 
   // Add colored prefix and message
-  output += `${color}${prefix}${resetColor} ${color}${entry.message}${resetColor}`;
+  const semibold = config.enableColors ? SEMIBOLD : "";
+  output += `${color}${prefix}${resetColor} ${color}${semibold}${entry.message}${resetColor}`;
 
   return output;
 }

@@ -5,10 +5,10 @@ import { LogLevel } from "../../domain/types/log";
  */
 export const DEFAULT_COLORS = {
   info: "\x1b[36m", // Cyan
-  success: "\x1b[32m", // Green
-  warning: "\x1b[33m", // Yellow
-  error: "\x1b[31m", // Red
-  debug: "\x1b[35m", // Magenta
+  success: "\x1b[92m", // Bright Green
+  warning: "\x1b[93m", // Bright Yellow
+  error: "\x1b[91m", // Bright Red
+  debug: "\x1b[95m", // Bright Magenta
 };
 
 /**
@@ -25,6 +25,11 @@ export const DEFAULT_TIMESTAMP_COLOR = "\x1b[36m"; // Turquoise/Cyan
  * ANSI reset color code
  */
 export const RESET_COLOR = "\x1b[0m";
+
+/**
+ * ANSI semibold/bold code
+ */
+export const SEMIBOLD = "\x1b[1m";
 
 /**
  * Default prefixes for each log type
