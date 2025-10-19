@@ -1,0 +1,45 @@
+{
+  "name": "@hubx/rn-debugger",
+  "version": "1.0.0",
+  "description": "A configurable logging system for React Native applications with clean architecture",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "logger",
+    "debug",
+    "logging",
+    "typescript",
+    "clean-architecture"
+  ],
+  "author": "HubX Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hubx/rn-debugger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hubx/rn-debugger/issues"
+  },
+  "homepage": "https://github.com/hubx/rn-debugger#readme",
+  "peerDependencies": {
+    "react-native": ">=0.60.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
