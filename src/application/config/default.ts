@@ -15,11 +15,11 @@ export const DEFAULT_LOGGER_CONFIG: LogConfig = {
     debug: "\x1b[35m", // Magenta
   },
   prefixes: {
-    info: "ℹ️  INFO",
-    success: "✅ SUCCESS",
-    warning: "⚠️  WARNING",
-    error: "❌ ERROR",
-    debug: "🐛 DEBUG",
+    info: "ⓘ",
+    success: "✅",
+    warning: "⚠️",
+    error: "❌",
+    debug: "🛠",
   },
   fileNameColor: "\x1b[38;5;208m", // Orange
 };

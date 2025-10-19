@@ -17,6 +17,11 @@ export const DEFAULT_COLORS = {
 export const DEFAULT_FILE_COLOR = "\x1b[38;5;208m"; // Orange
 
 /**
+ * Default timestamp color
+ */
+export const DEFAULT_TIMESTAMP_COLOR = "\x1b[36m"; // Turquoise/Cyan
+
+/**
  * ANSI reset color code
  */
 export const RESET_COLOR = "\x1b[0m";
@@ -25,11 +30,11 @@ export const RESET_COLOR = "\x1b[0m";
  * Default prefixes for each log type
  */
 export const DEFAULT_PREFIXES = {
-  info: "ℹ️  INFO",
-  success: "✅ SUCCESS",
-  warning: "⚠️  WARNING",
-  error: "❌ ERROR",
-  debug: "🐛 DEBUG",
+  info: "ⓘ",
+  success: "✅",
+  warning: "⚠️",
+  error: "❌",
+  debug: "�",
 } as const;
 
 /**

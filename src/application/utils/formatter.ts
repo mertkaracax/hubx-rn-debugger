@@ -4,6 +4,7 @@ import {
   RESET_COLOR,
   DEFAULT_PREFIXES,
   LOG_LEVEL_HIERARCHY,
+  DEFAULT_TIMESTAMP_COLOR,
 } from "../constants/config";
 
 /**
@@ -16,6 +17,18 @@ export function shouldLog(logType: LogType, minLogLevel?: number): boolean {
 
   const currentLevel = LOG_LEVEL_HIERARCHY[logType];
   return currentLevel >= minLogLevel;
+}
+
+/**
+ * Format timestamp to HH:MM:SS:MMM format
+ */
+function formatTimestamp(timestamp: Date): string {
+  const hours = timestamp.getHours().toString().padStart(2, "0");
+  const minutes = timestamp.getMinutes().toString().padStart(2, "0");
+  const seconds = timestamp.getSeconds().toString().padStart(2, "0");
+  const milliseconds = timestamp.getMilliseconds().toString().padStart(3, "0");
+
+  return `${hours}:${minutes}:${seconds}:${milliseconds}`;
 }
 
 /**
@@ -33,6 +46,11 @@ export function formatLogEntry(entry: LogEntry, config: LogConfig): string {
   const prefix = prefixes[entry.type] || entry.type.toUpperCase();
 
   let output = "";
+
+  // Add timestamp
+  const timestamp = formatTimestamp(entry.timestamp);
+  const timeColor = config.enableColors ? DEFAULT_TIMESTAMP_COLOR : "";
+  output += `${timeColor}[${timestamp}]${resetColor} `;
 
   // Add file name if enabled
   if (config.showFileName && entry.fileName) {
