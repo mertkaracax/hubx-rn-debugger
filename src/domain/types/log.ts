@@ -1,4 +1,15 @@
 /**
+ * Log level enum for better type safety
+ */
+export enum LogLevel {
+  DEBUG = 0,
+  INFO = 1,
+  SUCCESS = 1,
+  WARNING = 2,
+  ERROR = 3,
+}
+
+/**
  * Log level types supported by the logger
  */
 export type LogType = "info" | "success" | "warning" | "error" | "debug";
@@ -23,7 +34,7 @@ export interface LogConfig {
   /** Custom color scheme */
   colors?: Partial<LogColors>;
   /** Minimum log level to output */
-  minLogLevel?: LogType | undefined;
+  minLogLevel?: LogLevel;
   /** Custom prefixes for each log type */
   prefixes?: Partial<Record<LogType, string>>;
   /** Whether to show file names in logs */

@@ -1,9 +1,9 @@
-import { LogColors } from "../../domain/types/log.types";
+import { LogLevel } from "../../domain/types/log";
 
 /**
  * Default ANSI color codes for different log types
  */
-export const DEFAULT_COLORS: LogColors = {
+export const DEFAULT_COLORS = {
   info: "\x1b[36m", // Cyan
   success: "\x1b[32m", // Green
   warning: "\x1b[33m", // Yellow
@@ -35,10 +35,10 @@ export const DEFAULT_PREFIXES = {
 /**
  * Log level hierarchy for filtering
  */
-export const LOG_LEVEL_HIERARCHY: Record<string, number> = {
-  debug: 0,
-  info: 1,
-  success: 1,
-  warning: 2,
-  error: 3,
-};
+export const LOG_LEVEL_HIERARCHY = {
+  debug: LogLevel.DEBUG,
+  info: LogLevel.INFO,
+  success: LogLevel.SUCCESS,
+  warning: LogLevel.WARNING,
+  error: LogLevel.ERROR,
+} as const;

@@ -1,4 +1,4 @@
-import { LogType, LogConfig } from "../types/log.types";
+import { LogType, LogConfig, LogLevel } from "../types/log";
 
 /**
  * Logger interface following dependency inversion principle
@@ -43,4 +43,9 @@ export interface ILogger {
    * Get current configuration
    */
   getConfig(): LogConfig;
+
+  /**
+   * Set minimum log level
+   */
+  setMinLogLevel(level: LogLevel): void;
 }

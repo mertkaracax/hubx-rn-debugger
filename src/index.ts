@@ -1,5 +1,4 @@
-// Main logger service
-export { LoggerService } from "./application/services/logger.service";
+export { LoggerService } from "./application/services/LoggerService";
 
 // Types and interfaces
 export type {
@@ -7,62 +6,76 @@ export type {
   LogColors,
   LogConfig,
   LogEntry,
-} from "./domain/types/log.types";
-export type { ILogger } from "./domain/interfaces/logger.interface";
+} from "./domain/types/log";
+export type { ILogger } from "./domain/interfaces/ILogger";
+
+// Enums
+export { LogLevel } from "./domain/types/log";
 
 // Configuration
-export {
-  LoggerConfigManager,
-  DEFAULT_LOGGER_CONFIG,
-} from "./application/config/logger.config";
-
-// Utilities (for advanced usage)
-export { ConsoleAdapter } from "./infrastructure/adapters/console.adapter";
-export { StackTraceUtil } from "./infrastructure/utils/stack-trace.util";
-export {
-  DEFAULT_COLORS,
-  DEFAULT_FILE_COLOR,
-  RESET_COLOR,
-  DEFAULT_PREFIXES,
-  LOG_LEVEL_HIERARCHY,
-} from "./infrastructure/utils/colors.util";
+export { DEFAULT_LOGGER_CONFIG } from "./application/config/default";
 
 // Create default logger instance
-import { LoggerService } from "./application/services/logger.service";
+import { LoggerService } from "./application/services/LoggerService";
+import { isDevelopmentMode } from "./application/utils/dev-check";
 
 const defaultLogger = new LoggerService();
+const isDev = isDevelopmentMode();
 
 // Export convenience methods using the default logger
 export const log = (
   message: string,
-  logType?: import("./domain/types/log.types").LogType
+  logType?: import("./domain/types/log").LogType
 ): void => {
+  if (!isDev) {
+    return;
+  }
   defaultLogger.log(message, logType);
 };
 
 export const logInfo = (message: string): void => {
+  if (!isDev) {
+    return;
+  }
+
   defaultLogger.logInfo(message);
 };
 
 export const logSuccess = (message: string): void => {
+  if (!isDev) {
+    return;
+  }
+
   defaultLogger.logSuccess(message);
 };
 
 export const logWarning = (message: string): void => {
+  if (!isDev) {
+    return;
+  }
+
   defaultLogger.logWarning(message);
 };
 
 export const logError = (message: string): void => {
+  if (!isDev) {
+    return;
+  }
+
   defaultLogger.logError(message);
 };
 
 export const logDebug = (message: string): void => {
+  if (!isDev) {
+    return;
+  }
+
   defaultLogger.logDebug(message);
 };
 
 // Export configuration function
 export const configureLogger = (
-  config: import("./domain/types/log.types").LogConfig
+  config: import("./domain/types/log").LogConfig
 ): void => {
   defaultLogger.configure(config);
 };

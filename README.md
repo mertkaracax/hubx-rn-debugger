@@ -7,10 +7,11 @@ A configurable logging system for React Native applications built with clean arc
 - 🎨 **Colored Output**: Beautiful colored console output with customizable color schemes
 - 📁 **File Name Detection**: Automatically shows the calling file name in logs
 - 🔧 **Configurable**: Extensive configuration options for colors, prefixes, and log levels
-- 🏗️ **Clean Architecture**: Built with clean architecture principles for maintainability
+- 🏗️ **Simple Architecture**: Clean and simple architecture without unnecessary complexity
 - 📦 **TypeScript Support**: Full TypeScript support with type definitions
 - 🚀 **React Native Optimized**: Designed specifically for React Native applications
 - 🎯 **Zero Dependencies**: No external dependencies, lightweight package
+- ⚡ **Production Optimized**: Automatically disabled in production builds (**DEV** = false) with zero performance impact
 
 ## Installation
 
@@ -47,13 +48,13 @@ logDebug("Debug information");
 ### Advanced Usage with Configuration
 
 ```typescript
-import { configureLogger, LoggerService } from "hubx-rn-debugger";
+import { configureLogger, LoggerService, LogLevel } from "hubx-rn-debugger";
 
 // Configure the default logger
 configureLogger({
   enableColors: true,
   showFileName: true,
-  minLogLevel: "info",
+  minLogLevel: LogLevel.INFO,
   colors: {
     info: "\x1b[36m", // Custom cyan
     success: "\x1b[32m", // Custom green
@@ -75,7 +76,7 @@ configureLogger({
 const customLogger = new LoggerService({
   enableColors: false,
   showFileName: false,
-  minLogLevel: "warning",
+  minLogLevel: LogLevel.WARNING,
 });
 
 customLogger.logInfo("This won't show (below min level)");
@@ -149,13 +150,25 @@ LoggerService.create(config?: LogConfig): LoggerService;
 type LogType = "info" | "success" | "warning" | "error" | "debug";
 ```
 
+#### `LogLevel`
+
+```typescript
+enum LogLevel {
+  DEBUG = 0,
+  INFO = 1,
+  SUCCESS = 1,
+  WARNING = 2,
+  ERROR = 3,
+}
+```
+
 #### `LogConfig`
 
 ```typescript
 interface LogConfig {
   enableColors?: boolean;
   colors?: Partial<LogColors>;
-  minLogLevel?: LogType | undefined;
+  minLogLevel?: LogLevel;
   prefixes?: Partial<Record<LogType, string>>;
   showFileName?: boolean;
   fileNameColor?: string;
@@ -184,15 +197,15 @@ Enable or disable colored output. Default: `true`
 
 Custom color scheme for different log types. Uses ANSI color codes.
 
-### `minLogLevel: LogType | undefined`
+### `minLogLevel: LogLevel`
 
 Minimum log level to output. Logs below this level will be filtered out.
 
-- `debug` (0) - Shows all logs
-- `info` (1) - Shows info, success, warning, error
-- `success` (1) - Shows info, success, warning, error
-- `warning` (2) - Shows warning, error
-- `error` (3) - Shows only errors
+- `LogLevel.DEBUG` (0) - Shows all logs
+- `LogLevel.INFO` (1) - Shows info, success, warning, error
+- `LogLevel.SUCCESS` (1) - Shows info, success, warning, error
+- `LogLevel.WARNING` (2) - Shows warning, error
+- `LogLevel.ERROR` (3) - Shows only errors
 
 ### `prefixes: Partial<Record<LogType, string>>`
 
@@ -211,23 +224,39 @@ Color for the file name display. Uses ANSI color codes.
 ### Environment-based Configuration
 
 ```typescript
-import { configureLogger } from "hubx-rn-debugger";
+import { configureLogger, LogLevel } from "hubx-rn-debugger";
 
 // Development configuration
 if (__DEV__) {
   configureLogger({
     enableColors: true,
     showFileName: true,
-    minLogLevel: "debug",
+    minLogLevel: LogLevel.DEBUG,
   });
 } else {
-  // Production configuration
+  // Production configuration - logger is automatically disabled
+  // No need to configure anything, all log calls return immediately
   configureLogger({
     enableColors: false,
     showFileName: false,
-    minLogLevel: "error",
+    minLogLevel: LogLevel.ERROR,
   });
 }
+```
+
+### Production Performance
+
+In production builds (`__DEV__ = false`), the logger is completely disabled:
+
+```typescript
+import { logInfo, logError } from "hubx-rn-debugger";
+
+// In production, these calls return immediately with zero performance impact
+logInfo("This won't execute in production");
+logError("This won't execute in production");
+
+// No stack trace parsing, no string formatting, no console.log calls
+// Perfect for production apps where performance matters
 ```
 
 ### Custom Logger for Specific Modules
@@ -267,14 +296,14 @@ class ApiService {
 ### Disable Logging in Tests
 
 ```typescript
-import { configureLogger } from "hubx-rn-debugger";
+import { configureLogger, LogLevel } from "hubx-rn-debugger";
 
 // In your test setup
 beforeEach(() => {
   configureLogger({
     enableColors: false,
     showFileName: false,
-    minLogLevel: "error", // Only show errors in tests
+    minLogLevel: LogLevel.ERROR, // Only show errors in tests
   });
 });
 ```
