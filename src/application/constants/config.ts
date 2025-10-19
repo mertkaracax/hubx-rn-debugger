@@ -30,11 +30,11 @@ export const RESET_COLOR = "\x1b[0m";
  * Default prefixes for each log type
  */
 export const DEFAULT_PREFIXES = {
-  info: "ⓘ",
-  success: "✅",
-  warning: "⚠️",
-  error: "❌",
-  debug: "�",
+  info: "🔵",
+  success: "🟢",
+  warning: "🟡",
+  error: "🔴",
+  debug: "🟣",
 } as const;
 
 /**

@@ -59,7 +59,7 @@ export function formatLogEntry(entry: LogEntry, config: LogConfig): string {
   }
 
   // Add colored prefix and message
-  output += `${color}${prefix}${resetColor} ${entry.message}`;
+  output += `${color}${prefix}${resetColor} ${color}${entry.message}${resetColor}`;
 
   return output;
 }
