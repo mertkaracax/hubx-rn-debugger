@@ -1,4 +1,4 @@
-# @hubx/rn-debugger
+# hubx-rn-debugger
 
 A configurable logging system for React Native applications built with clean architecture principles.
 
@@ -15,7 +15,7 @@ A configurable logging system for React Native applications built with clean arc
 ## Installation
 
 ```bash
-npm install @hubx/rn-debugger
+npm install hubx-rn-debugger
 ```
 
 ## Quick Start
@@ -30,7 +30,7 @@ import {
   logWarning,
   logError,
   logDebug,
-} from "@hubx/rn-debugger";
+} from "hubx-rn-debugger";
 
 // Simple logging
 log("Hello World!");
@@ -47,7 +47,7 @@ logDebug("Debug information");
 ### Advanced Usage with Configuration
 
 ```typescript
-import { configureLogger, LoggerService } from "@hubx/rn-debugger";
+import { configureLogger, LoggerService } from "hubx-rn-debugger";
 
 // Configure the default logger
 configureLogger({
@@ -211,7 +211,7 @@ Color for the file name display. Uses ANSI color codes.
 ### Environment-based Configuration
 
 ```typescript
-import { configureLogger } from "@hubx/rn-debugger";
+import { configureLogger } from "hubx-rn-debugger";
 
 // Development configuration
 if (__DEV__) {
@@ -233,7 +233,7 @@ if (__DEV__) {
 ### Custom Logger for Specific Modules
 
 ```typescript
-import { LoggerService } from "@hubx/rn-debugger";
+import { LoggerService } from "hubx-rn-debugger";
 
 // Create a logger specifically for API calls
 const apiLogger = new LoggerService({
@@ -267,7 +267,7 @@ class ApiService {
 ### Disable Logging in Tests
 
 ```typescript
-import { configureLogger } from "@hubx/rn-debugger";
+import { configureLogger } from "hubx-rn-debugger";
 
 // In your test setup
 beforeEach(() => {
