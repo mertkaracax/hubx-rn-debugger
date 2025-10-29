@@ -4,6 +4,7 @@ A configurable logging system for React Native applications built with clean arc
 
 ## Features
 
+- 🌍 **Global Access**: Use logger functions without importing in every file
 - 🎨 **Colored Output**: Beautiful colored console output with customizable color schemes
 - 📁 **File Name Detection**: Automatically shows the calling file name in logs
 - 🔧 **Configurable**: Extensive configuration options for colors, prefixes, and log levels
@@ -21,7 +22,31 @@ npm install hubx-rn-debugger
 
 ## Quick Start
 
-### Basic Usage
+### Method 1: Global Usage (No Import Required!) ⭐
+
+After installing the package, you can use the logger functions globally without any imports:
+
+```typescript
+// No import needed! Just use directly
+log("Hello World!");
+log("This is an error", "error");
+
+// Convenience methods - all available globally
+logInfo("Information message");
+logSuccess("Operation completed successfully");
+logWarning("This is a warning");
+logError("Something went wrong");
+logDebug("Debug information");
+
+// Configure logger globally
+configureLogger({
+  enableColors: true,
+  showFileName: true,
+  minLogLevel: LogLevel.DEBUG,
+});
+```
+
+### Method 2: Traditional Import Usage
 
 ```typescript
 import {
@@ -43,6 +68,73 @@ logSuccess("Operation completed successfully");
 logWarning("This is a warning");
 logError("Something went wrong");
 logDebug("Debug information");
+```
+
+## Global Usage (Recommended) 🌍
+
+The package automatically registers all logger functions globally, so you can use them anywhere in your React Native app without importing:
+
+### Setup (One-time)
+
+In your main App.tsx or index.js file, just import the package once:
+
+```typescript
+// App.tsx or index.js - Import once to register global functions
+import "hubx-rn-debugger";
+
+// That's it! Now you can use logger functions anywhere without imports
+```
+
+### Usage in Any Component
+
+```typescript
+// MyComponent.tsx - No import needed!
+import React from "react";
+
+export const MyComponent = () => {
+  const handlePress = () => {
+    // Use logger functions directly - no import required!
+    logInfo("Button pressed");
+    logSuccess("Operation completed");
+    logError("Something went wrong");
+  };
+
+  return <button onPress={handlePress}>Press me</button>;
+};
+```
+
+### Usage in Services
+
+```typescript
+// ApiService.ts - No import needed!
+export class ApiService {
+  async fetchData() {
+    logInfo("Starting API call"); // No import needed!
+
+    try {
+      const response = await fetch("/api/data");
+      logSuccess("API call successful"); // No import needed!
+      return response;
+    } catch (error) {
+      logError("API call failed"); // No import needed!
+      throw error;
+    }
+  }
+}
+```
+
+### Global Configuration
+
+```typescript
+// App.tsx - Configure once globally
+import "hubx-rn-debugger";
+
+// Configure the global logger
+configureLogger({
+  enableColors: true,
+  showFileName: true,
+  minLogLevel: LogLevel.DEBUG,
+});
 ```
 
 ### Advanced Usage with Configuration
@@ -331,6 +423,10 @@ With default configuration, the logger produces output like this:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Example Usage
+
+See the [example-usage.ts](example-usage.ts) file for comprehensive usage examples showing both global and traditional import methods.
 
 ## Support
 
