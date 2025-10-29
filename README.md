@@ -74,7 +74,7 @@ logDebug("Debug information");
 
 The package automatically registers all logger functions globally, so you can use them anywhere in your React Native app without importing:
 
-### Setup (One-time)
+### Setup (One-time) - Method 1: Auto Setup
 
 In your main App.tsx or index.js file, just import the package once:
 
@@ -83,6 +83,19 @@ In your main App.tsx or index.js file, just import the package once:
 import "hubx-rn-debugger";
 
 // That's it! Now you can use logger functions anywhere without imports
+```
+
+### Setup (One-time) - Method 2: Manual Setup
+
+If auto setup doesn't work, use the manual setup:
+
+```typescript
+// App.tsx or index.js - Manual setup
+import "hubx-rn-debugger/global-setup";
+
+// Or import and call setup manually
+import { setupGlobalLogger } from "hubx-rn-debugger";
+setupGlobalLogger();
 ```
 
 ### Usage in Any Component
@@ -423,6 +436,59 @@ With default configuration, the logger produces output like this:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Troubleshooting Global Usage
+
+### Global Functions Not Working?
+
+If global functions are not available, try these solutions:
+
+1. **Check Import Order**: Make sure you import the package before using global functions:
+
+```typescript
+// App.tsx - Import first
+import "hubx-rn-debugger";
+
+// Then use in other files
+logInfo("This should work now");
+```
+
+2. **Use Manual Setup**: If auto setup doesn't work:
+
+```typescript
+// App.tsx
+import { setupGlobalLogger } from "hubx-rn-debugger";
+setupGlobalLogger();
+```
+
+3. **Check Development Mode**: Global functions only work in development mode:
+
+```typescript
+// Check if you're in development mode
+console.log("DEV mode:", __DEV__);
+```
+
+4. **Fallback to Traditional Import**: If global doesn't work, use traditional imports:
+
+```typescript
+import { logInfo, logSuccess } from "hubx-rn-debugger";
+```
+
+### Debug Global Setup
+
+```typescript
+// Check if global functions are available
+console.log("Global log function:", typeof global.log);
+console.log("Global logInfo function:", typeof global.logInfo);
+
+// If undefined, call setup manually
+if (typeof global.log === "undefined") {
+  import("hubx-rn-debugger").then(({ setupGlobalLogger }) => {
+    setupGlobalLogger();
+    console.log("Global logger setup completed");
+  });
+}
+```
 
 ## Example Usage
 

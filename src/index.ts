@@ -86,27 +86,35 @@ export const logger = defaultLogger;
 // Default export
 export default log;
 
-// Global window object setup for React Native
-if (typeof global !== "undefined") {
+// Global setup function - call this to register global functions
+const setupGlobalLogger = (): void => {
   // React Native global object
-  (global as any).log = log;
-  (global as any).logInfo = logInfo;
-  (global as any).logSuccess = logSuccess;
-  (global as any).logWarning = logWarning;
-  (global as any).logError = logError;
-  (global as any).logDebug = logDebug;
-  (global as any).logger = logger;
-  (global as any).configureLogger = configureLogger;
-}
+  if (typeof global !== "undefined") {
+    (global as any).log = log;
+    (global as any).logInfo = logInfo;
+    (global as any).logSuccess = logSuccess;
+    (global as any).logWarning = logWarning;
+    (global as any).logError = logError;
+    (global as any).logDebug = logDebug;
+    (global as any).logger = logger;
+    (global as any).configureLogger = configureLogger;
+  }
 
-// Browser window object setup
-if (typeof window !== "undefined") {
-  (window as any).log = log;
-  (window as any).logInfo = logInfo;
-  (window as any).logSuccess = logSuccess;
-  (window as any).logWarning = logWarning;
-  (window as any).logError = logError;
-  (window as any).logDebug = logDebug;
-  (window as any).logger = logger;
-  (window as any).configureLogger = configureLogger;
-}
+  // Browser window object
+  if (typeof window !== "undefined") {
+    (window as any).log = log;
+    (window as any).logInfo = logInfo;
+    (window as any).logSuccess = logSuccess;
+    (window as any).logWarning = logWarning;
+    (window as any).logError = logError;
+    (window as any).logDebug = logDebug;
+    (window as any).logger = logger;
+    (window as any).configureLogger = configureLogger;
+  }
+};
+
+// Auto-setup when module is imported (side effect)
+setupGlobalLogger();
+
+// Export global setup for manual control
+export { setupGlobalLogger };
