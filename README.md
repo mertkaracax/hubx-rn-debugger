@@ -26,12 +26,36 @@ npm install hubx-rn-debugger
 
 After installing the package, you can use the logger functions globally without any imports:
 
+**Using Log Object (Recommended)**
+
 ```typescript
-// No import needed! Just use directly
+// App.tsx - Import once to register globals
+import "hubx-rn-debugger";
+
+// Then use anywhere without imports - Log object
+Log.info("Information message");
+Log.success("Operation completed successfully");
+Log.warning("This is a warning");
+Log.error("Something went wrong");
+Log.debug("Debug information");
+
+// Configure logger globally
+Log.configure({
+  enableColors: true,
+  showFileName: true,
+  minLogLevel: LogLevel.DEBUG,
+});
+```
+
+**Using Individual Functions**
+
+```typescript
+// App.tsx - Import once to register globals
+import "hubx-rn-debugger";
+
+// Then use anywhere without imports - individual functions
 log("Hello World!");
 log("This is an error", "error");
-
-// Convenience methods - all available globally
 logInfo("Information message");
 logSuccess("Operation completed successfully");
 logWarning("This is a warning");
@@ -100,6 +124,28 @@ setupGlobalLogger();
 
 ### Usage in Any Component
 
+**Method 1: Using Log Object (Recommended)**
+
+```typescript
+// MyComponent.tsx - No import needed!
+import React from "react";
+
+export const MyComponent = () => {
+  const handlePress = () => {
+    // Use Log object - no import required!
+    Log.info("Button pressed");
+    Log.success("Operation completed");
+    Log.error("Something went wrong");
+    Log.warning("Low memory");
+    Log.debug("Debug info");
+  };
+
+  return <button onPress={handlePress}>Press me</button>;
+};
+```
+
+**Method 2: Using Individual Functions**
+
 ```typescript
 // MyComponent.tsx - No import needed!
 import React from "react";
@@ -117,6 +163,28 @@ export const MyComponent = () => {
 ```
 
 ### Usage in Services
+
+**Using Log Object (Recommended)**
+
+```typescript
+// ApiService.ts - No import needed!
+export class ApiService {
+  async fetchData() {
+    Log.info("Starting API call"); // No import needed!
+
+    try {
+      const response = await fetch("/api/data");
+      Log.success("API call successful"); // No import needed!
+      return response;
+    } catch (error) {
+      Log.error("API call failed"); // No import needed!
+      throw error;
+    }
+  }
+}
+```
+
+**Using Individual Functions**
 
 ```typescript
 // ApiService.ts - No import needed!
@@ -137,6 +205,22 @@ export class ApiService {
 ```
 
 ### Global Configuration
+
+**Using Log Object (Recommended)**
+
+```typescript
+// App.tsx - Configure once globally
+import "hubx-rn-debugger";
+
+// Configure the global logger using Log object
+Log.configure({
+  enableColors: true,
+  showFileName: true,
+  minLogLevel: LogLevel.DEBUG,
+});
+```
+
+**Using configureLogger Function**
 
 ```typescript
 // App.tsx - Configure once globally
@@ -190,6 +274,33 @@ customLogger.logError("This will also show");
 ```
 
 ## API Reference
+
+### Log Object (Recommended)
+
+The `Log` object provides a clean, object-oriented API for logging:
+
+```typescript
+// Global usage (no import needed after setup)
+Log.info(message: string): void;
+Log.success(message: string): void;
+Log.warning(message: string): void;
+Log.error(message: string): void;
+Log.debug(message: string): void;
+Log.log(message: string, logType?: LogType): void;
+Log.configure(config: LogConfig): void;
+Log.instance: LoggerService; // Access to the underlying logger instance
+```
+
+**Example:**
+
+```typescript
+Log.info("User logged in");
+Log.success("Data saved");
+Log.warning("Low memory");
+Log.error("Network failed");
+Log.debug("Debug info");
+Log.configure({ enableColors: true });
+```
 
 ### Main Functions
 

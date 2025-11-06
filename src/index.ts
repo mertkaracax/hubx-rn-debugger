@@ -83,6 +83,18 @@ export const configureLogger = (
 // Export default logger instance
 export const logger = defaultLogger;
 
+// Create Log object for global access (Log.success(), Log.info(), etc.)
+export const Log = {
+  info: logInfo,
+  success: logSuccess,
+  warning: logWarning,
+  error: logError,
+  debug: logDebug,
+  log: log,
+  configure: configureLogger,
+  instance: logger,
+};
+
 // Default export
 export default log;
 
@@ -90,6 +102,7 @@ export default log;
 const setupGlobalLogger = (): void => {
   // React Native global object
   if (typeof global !== "undefined") {
+    // Individual functions
     (global as any).log = log;
     (global as any).logInfo = logInfo;
     (global as any).logSuccess = logSuccess;
@@ -98,10 +111,14 @@ const setupGlobalLogger = (): void => {
     (global as any).logDebug = logDebug;
     (global as any).logger = logger;
     (global as any).configureLogger = configureLogger;
+
+    // Log object (Log.success(), Log.info(), etc.)
+    (global as any).Log = Log;
   }
 
   // Browser window object
   if (typeof window !== "undefined") {
+    // Individual functions
     (window as any).log = log;
     (window as any).logInfo = logInfo;
     (window as any).logSuccess = logSuccess;
@@ -110,6 +127,9 @@ const setupGlobalLogger = (): void => {
     (window as any).logDebug = logDebug;
     (window as any).logger = logger;
     (window as any).configureLogger = configureLogger;
+
+    // Log object (Log.success(), Log.info(), etc.)
+    (window as any).Log = Log;
   }
 };
 

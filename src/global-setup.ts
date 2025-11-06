@@ -12,6 +12,7 @@ import {
   logDebug,
   logger,
   configureLogger,
+  Log,
 } from "./index";
 
 // Setup global functions for React Native
@@ -24,6 +25,7 @@ if (typeof global !== "undefined") {
   (global as any).logDebug = logDebug;
   (global as any).logger = logger;
   (global as any).configureLogger = configureLogger;
+  (global as any).Log = Log;
 }
 
 // Setup global functions for browser
@@ -36,6 +38,7 @@ if (typeof window !== "undefined") {
   (window as any).logDebug = logDebug;
   (window as any).logger = logger;
   (window as any).configureLogger = configureLogger;
+  (window as any).Log = Log;
 }
 
 // Export for manual setup if needed
@@ -48,4 +51,5 @@ export {
   logDebug,
   logger,
   configureLogger,
+  Log,
 };

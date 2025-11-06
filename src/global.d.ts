@@ -25,6 +25,21 @@ declare global {
   var logDebug: (message: string) => void;
   var logger: import("./application/services/LoggerService").LoggerService;
   var configureLogger: (config: LogConfig) => void;
+
+  // Global Log object - use as Log.success(), Log.info(), etc.
+  var Log: {
+    info: (message: string) => void;
+    success: (message: string) => void;
+    warning: (message: string) => void;
+    error: (message: string) => void;
+    debug: (message: string) => void;
+    log: (
+      message: string,
+      logType?: import("./domain/types/log").LogType
+    ) => void;
+    configure: (config: LogConfig) => void;
+    instance: import("./application/services/LoggerService").LoggerService;
+  };
 }
 
 export {};
