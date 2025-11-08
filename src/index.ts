@@ -80,9 +80,6 @@ export const configureLogger = (
   defaultLogger.configure(config);
 };
 
-// Export default logger instance
-export const logger = defaultLogger;
-
 // Create Log object for global access (Log.success(), Log.info(), etc.)
 export const Log = {
   info: logInfo,
@@ -92,7 +89,6 @@ export const Log = {
   debug: logDebug,
   log: log,
   configure: configureLogger,
-  instance: logger,
 };
 
 // Default export
@@ -114,7 +110,6 @@ const setupGlobalLogger = (): void => {
     (window as any).logWarning = logWarning;
     (window as any).logError = logError;
     (window as any).logDebug = logDebug;
-    (window as any).logger = logger;
     (window as any).configureLogger = configureLogger;
 
     // Log object (Log.success(), Log.info(), etc.)

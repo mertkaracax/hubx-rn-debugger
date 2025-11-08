@@ -14,19 +14,6 @@ declare global {
   // Browser window object (for web compatibility)
   var window: any;
 
-  // Global logger functions - no import needed!
-  var log: (
-    message: string,
-    logType?: import("./domain/types/log").LogType
-  ) => void;
-  var logInfo: (message: string) => void;
-  var logSuccess: (message: string) => void;
-  var logWarning: (message: string) => void;
-  var logError: (message: string) => void;
-  var logDebug: (message: string) => void;
-  var logger: import("./application/services/LoggerService").LoggerService;
-  var configureLogger: (config: LogConfig) => void;
-
   // Global Log object - use as Log.success(), Log.info(), etc.
   var Log: ILog;
 }
