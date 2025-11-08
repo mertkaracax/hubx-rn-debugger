@@ -1,3 +1,4 @@
+import { LoggerService } from "../../application/services/LoggerService";
 import { LogType, LogConfig, LogLevel } from "../types/log";
 
 /**
@@ -48,4 +49,15 @@ export interface ILogger {
    * Set minimum log level
    */
   setMinLogLevel(level: LogLevel): void;
+}
+
+export interface ILog {
+  info: (message: string) => void;
+  success: (message: string) => void;
+  warning: (message: string) => void;
+  error: (message: string) => void;
+  debug: (message: string) => void;
+  log: (message: string, logType?: LogType) => void;
+  configure: (config: LogConfig) => void;
+  instance: LoggerService;
 }
