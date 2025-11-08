@@ -1,5 +1,6 @@
 /**
  * Extract the calling file name from the current stack trace
+ * Returns the first .ts or .tsx file name that is not part of the logger itself
  */
 export function getCallingFileName(): string {
   const stack = new Error().stack;
@@ -8,37 +9,60 @@ export function getCallingFileName(): string {
   }
 
   const lines = stack.split("\n");
-  const excludeFiles = [
-    "console-log.ts",
-    "getFileName",
-    "logError",
-    "logSuccess",
+
+  // Files and functions to exclude (logger internals)
+  const excludePatterns = [
+    "stack-trace.ts",
+    "LoggerService.ts",
+    "index.ts",
+    "getCallingFileName",
+    "LoggerService.log",
     "logInfo",
+    "logSuccess",
     "logWarning",
+    "logError",
     "logDebug",
     "log(",
-    "LoggerService.log",
-    "getCallingFileName",
   ];
 
-  // Skip the first few lines (Error, getCallingFileName, log function)
-  for (let i = 3; i < lines.length; i++) {
+  // Skip the first line (Error message)
+  for (let i = 1; i < lines.length; i++) {
     const line = lines[i];
     if (!line || !line.includes("at ")) {
       continue;
     }
 
     // Check if this line should be excluded
-    const shouldExclude = excludeFiles.some((exclusion) =>
-      line.includes(exclusion)
+    const shouldExclude = excludePatterns.some((pattern) =>
+      line.includes(pattern)
     );
 
-    if (shouldExclude) continue;
+    if (shouldExclude) {
+      continue;
+    }
 
-    // Extract the part after "at " and before " ("
-    const match = line.match(/at\s+(.+?)\s*\(/);
+    // Try to match: at functionName (file.ts:line:column)
+    let match = line.match(/at\s+.*?\((.+\.tsx?):\d+:\d+\)/);
     if (match && match[1]) {
-      return match[1];
+      const filePath = match[1];
+      // Extract just the file name from the path
+      const fileName =
+        filePath.split("/").pop() || filePath.split("\\").pop() || filePath;
+      if (fileName.endsWith(".ts") || fileName.endsWith(".tsx")) {
+        return fileName;
+      }
+    }
+
+    // Try to match: at file.ts:line:column (no function name)
+    match = line.match(/at\s+(.+\.tsx?):\d+:\d+/);
+    if (match && match[1]) {
+      const filePath = match[1];
+      // Extract just the file name from the path
+      const fileName =
+        filePath.split("/").pop() || filePath.split("\\").pop() || filePath;
+      if (fileName.endsWith(".ts") || fileName.endsWith(".tsx")) {
+        return fileName;
+      }
     }
   }
 

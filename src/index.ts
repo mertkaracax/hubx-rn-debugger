@@ -23,7 +23,7 @@ const defaultLogger = new LoggerService();
 const isDev = isDevelopmentMode();
 
 // Export convenience methods using the default logger
-export const log = (
+const log = (
   message: string,
   logType?: import("./domain/types/log").LogType
 ): void => {
@@ -33,7 +33,7 @@ export const log = (
   defaultLogger.log(message, logType);
 };
 
-export const logInfo = (message: string): void => {
+const logInfo = (message: string): void => {
   if (!isDev) {
     return;
   }
@@ -41,7 +41,7 @@ export const logInfo = (message: string): void => {
   defaultLogger.logInfo(message);
 };
 
-export const logSuccess = (message: string): void => {
+const logSuccess = (message: string): void => {
   if (!isDev) {
     return;
   }
@@ -49,7 +49,7 @@ export const logSuccess = (message: string): void => {
   defaultLogger.logSuccess(message);
 };
 
-export const logWarning = (message: string): void => {
+const logWarning = (message: string): void => {
   if (!isDev) {
     return;
   }
@@ -57,7 +57,7 @@ export const logWarning = (message: string): void => {
   defaultLogger.logWarning(message);
 };
 
-export const logError = (message: string): void => {
+const logError = (message: string): void => {
   if (!isDev) {
     return;
   }
@@ -65,7 +65,7 @@ export const logError = (message: string): void => {
   defaultLogger.logError(message);
 };
 
-export const logDebug = (message: string): void => {
+const logDebug = (message: string): void => {
   if (!isDev) {
     return;
   }
@@ -102,17 +102,6 @@ export default log;
 const setupGlobalLogger = (): void => {
   // React Native global object
   if (typeof global !== "undefined") {
-    // Individual functions
-    (global as any).log = log;
-    (global as any).logInfo = logInfo;
-    (global as any).logSuccess = logSuccess;
-    (global as any).logWarning = logWarning;
-    (global as any).logError = logError;
-    (global as any).logDebug = logDebug;
-    (global as any).logger = logger;
-    (global as any).configureLogger = configureLogger;
-
-    // Log object (Log.success(), Log.info(), etc.)
     (global as any).Log = Log;
   }
 
