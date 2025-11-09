@@ -80,16 +80,85 @@ export const configureLogger = (
   defaultLogger.configure(config);
 };
 
-// Create Log object for global access (Log.success(), Log.info(), etc.)
-export const Log = {
-  info: logInfo,
-  success: logSuccess,
-  warning: logWarning,
-  error: logError,
-  debug: logDebug,
-  log: log,
-  configure: configureLogger,
-};
+// Log class with static methods for global access
+export class Log {
+  /**
+   * Get the default logger instance
+   */
+  static get instance(): LoggerService {
+    return defaultLogger;
+  }
+
+  /**
+   * Log an info message
+   */
+  static info(message: string): void {
+    if (!isDev) {
+      return;
+    }
+    defaultLogger.logInfo(message);
+  }
+
+  /**
+   * Log a success message
+   */
+  static success(message: string): void {
+    if (!isDev) {
+      return;
+    }
+    defaultLogger.logSuccess(message);
+  }
+
+  /**
+   * Log a warning message
+   */
+  static warning(message: string): void {
+    if (!isDev) {
+      return;
+    }
+    defaultLogger.logWarning(message);
+  }
+
+  /**
+   * Log an error message
+   */
+  static error(message: string): void {
+    if (!isDev) {
+      return;
+    }
+    defaultLogger.logError(message);
+  }
+
+  /**
+   * Log a debug message
+   */
+  static debug(message: string): void {
+    if (!isDev) {
+      return;
+    }
+    defaultLogger.logDebug(message);
+  }
+
+  /**
+   * Log a message with specified type
+   */
+  static log(
+    message: string,
+    logType?: import("./domain/types/log").LogType
+  ): void {
+    if (!isDev) {
+      return;
+    }
+    defaultLogger.log(message, logType);
+  }
+
+  /**
+   * Configure the default logger
+   */
+  static configure(config: import("./domain/types/log").LogConfig): void {
+    defaultLogger.configure(config);
+  }
+}
 
 // Default export
 export default log;
